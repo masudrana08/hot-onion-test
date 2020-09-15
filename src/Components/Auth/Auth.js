@@ -3,6 +3,7 @@ import {  FormGroup } from '@material-ui/core';
 import './Auth.css'
 import * as firebase from "firebase/app";
 import "firebase/auth"
+import { useHistory, useLocation } from 'react-router-dom';
 
 const Auth = () => {
     const [haveAccount, setHaveAccount]=useState(false)
@@ -14,32 +15,40 @@ const Auth = () => {
 
 
     const [submiter, setSubmiter]=useState("")
+
         const submitHandler=(event)=>{
             setSubmiter(event.target.name)
         }
 
+        const [emailChecker,setEmailChecker]=useState(true)
+        const history=useHistory()
+        const {pathname}=useLocation().state.from
         const formHandler=(event)=>{
             event.preventDefault()
-            
-            if(submiter=="signin"){
+            const emailCheck=RegExp(/\S+@\S+\.\S+/).test(user.email)
+            setEmailChecker(emailCheck)
 
+                    if(submiter=="signin" && emailCheck){
                     firebase.auth().signInWithEmailAndPassword(user.email, user.password)
                     .then(res=>{
-                        console.log(res)
+                        setLoggedIn(true)
+                        localStorage.setItem("loggedIn",true)
+                        history.replace(pathname)
                     })
             }
 
 
-            if(submiter=="signup"){
+            if(submiter=="signup" && emailCheck){
                 if(user.password==user.confirmPassword){
                     firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
                     .then(res=>{
                         const userInfo = firebase.auth().currentUser;
-            
                         userInfo.updateProfile({
                         displayName: user.username || "Food Lover",
                         photoURL: "https://example.com/jane-q-user/profile.jpg"
+                        
                         })
+                        setHaveAccount(true)
                     })
                     .catch(err=>{
                         console.log(err)
@@ -57,22 +66,26 @@ const Auth = () => {
     return (
         <form className="form-container" onSubmit={formHandler}>
             <FormGroup style={{width:"350px", margin:"auto", marginTop:"40px"}}>
-            
-            <input onBlur={(event)=>setUser({...user,email:event.target.value})} placeholder="Enter email address" required/>
-            
+             
+                
+            {
+                emailChecker ? <input type="email" onBlur={(event)=>setUser({...user,email:event.target.value})} placeholder="Enter email address" required/>
+
+                : <input type="email" style={{border:"1px solid red", borderRadius:"5px"}} onBlur={(event)=>setUser({...user,email:event.target.value})} onClick={()=>setEmailChecker(true)} placeholder="Enter email address" required/>
+            }
 
             {
                 haveAccount ? ""
-                    :<input onBlur={(event)=>setUser({...user,username:event.target.value})} placeholder="Enter user name" />
+                    :<input type="text" onBlur={(event)=>setUser({...user,username:event.target.value})} placeholder="Enter user name" />
                   
             }
 
-                <input onBlur={(event)=>setUser({...user,password:event.target.value})} placeholder="Enter user password" />
+                <input type="password" onBlur={(event)=>setUser({...user,password:event.target.value})} placeholder="Enter user password" required/>
             
 
             {
                 haveAccount ? ""
-                    :<input onBlur={(event)=>setUser({...user,confirmPassword:event.target.value})} onClick={(event)=>setUser({...user,passConfError:""})} placeholder="Confirm your password" />
+                    :<input type="password" onBlur={(event)=>setUser({...user,confirmPassword:event.target.value})} onClick={(event)=>setUser({...user,passConfError:""})} placeholder="Confirm your password" required/>
                   
             }
             {

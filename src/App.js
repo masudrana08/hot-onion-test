@@ -8,6 +8,8 @@ import Auth from './Components/Auth/Auth';
 import * as firebase from "firebase/app";
 import "firebase/auth"
 import firebaseConfig from './firebase.config'
+import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
+import ProceedOrder from './Components/ProceedOrder/ProceedOrder';
 function App() {
   firebase.initializeApp(firebaseConfig);
   
@@ -27,7 +29,10 @@ function App() {
        <Route path="/auth">
           <Auth></Auth>
        </Route>
-
+       
+       <PrivateRoute path="/proceed">
+         <ProceedOrder></ProceedOrder>
+       </PrivateRoute>
      </Switch>
    </Router>
   );
