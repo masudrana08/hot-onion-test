@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext, useState } from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import './App.css';
 import FoodDetails from './Components/FoodDetails/FoodDetails';
@@ -10,31 +10,36 @@ import "firebase/auth"
 import firebaseConfig from './firebase.config'
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
 import ProceedOrder from './Components/ProceedOrder/ProceedOrder';
+firebase.initializeApp(firebaseConfig);
+export const MyContext=createContext()
 function App() {
-  firebase.initializeApp(firebaseConfig);
+  
+const [cartLength,setCartLength]=useState(JSON.parse(localStorage.getItem("listedFood"))?.length)
   
   return (
-   <Router>
-     <Header></Header>
-     <Switch>
+   <MyContext.Provider value={[cartLength,setCartLength]}>
+      <Router>
+      <Header></Header>
+      <Switch>
 
-       <Route exact path="/">
-          <Home></Home>
-       </Route>
-      
-       <Route path="/food/:id">
-          <FoodDetails></FoodDetails>
-       </Route>
+        <Route exact path="/">
+            <Home></Home>
+        </Route>
+        
+        <Route path="/food/:id">
+            <FoodDetails></FoodDetails>
+        </Route>
 
-       <Route path="/auth">
-          <Auth></Auth>
-       </Route>
-       
-       <PrivateRoute path="/proceed">
-         <ProceedOrder></ProceedOrder>
-       </PrivateRoute>
-     </Switch>
-   </Router>
+        <Route path="/auth">
+            <Auth></Auth>
+        </Route>
+        
+        <PrivateRoute path="/proceed-order">
+          <ProceedOrder></ProceedOrder>
+        </PrivateRoute>
+      </Switch>
+    </Router>
+   </MyContext.Provider>
   );
 }
 

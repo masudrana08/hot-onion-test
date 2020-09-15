@@ -1,9 +1,11 @@
 import { Button, Grid } from '@material-ui/core';
-import React, {  useState } from 'react';
+import React, {  useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { MyContext } from '../../App';
 import foodData from '../../foodData'
 
 const FoodDetails = () => {
+    const [cartLength,setCartLength]=useContext(MyContext)
     const {id}=useParams()
     const selectedFood=foodData.find(food=>food.id==id)
     const {name, img, description,price,category} = selectedFood
@@ -17,6 +19,18 @@ const FoodDetails = () => {
 
     }
     
+    const addItem = ()=>{
+
+        
+
+        const getListedFood=JSON.parse(localStorage.getItem("listedFood"))
+        const foodBucket=getListedFood ? [...getListedFood,selectedFood]
+                :[selectedFood]
+        localStorage.setItem("listedFood",JSON.stringify(foodBucket))
+        
+        const length=JSON.parse(localStorage.getItem("listedFood"))?.length
+        setCartLength(length)
+    }
     return (
         <>
             <Grid item container xs={12} style={{textAlign:"center", padding:"10%"}}>
@@ -33,7 +47,7 @@ const FoodDetails = () => {
                         <span>+</span>
                     </h2>
                 </div>
-                <Button variant="contained" color="secondary" style={{borderRadius:"30px"}}>Add</Button>
+                <Button onClick={addItem} variant="contained" color="secondary" style={{borderRadius:"30px"}}>Add</Button>
                 </div>
                 <img style={{width:"150px"}} src={commonFood[a].img} alt=""/>
                 <img style={{width:"150px"}} src={commonFood[b].img} alt=""/>
