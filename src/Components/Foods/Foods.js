@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import foodData from '../../foodData'
 import Food from '../Food/Food';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core';
 const Foods = () => {
     const [category,setCategory]=useState("lunch");
     let filteredFood=foodData.filter(food=>{

@@ -1,7 +1,14 @@
-.form-group{
-    margin-top:40px
+.form-container input{
+    padding:10px;
+    margin-bottom:10px;
+    border:1px solid lightgray;
+    border-radius:5px
 }
-
-.form-control{
-    margin-bottom:1000px;
+.form-container input:focus{
+    outline:1px solid #fa0778;
+}
+.form-container input[type="submit"]{
+    background:#fa0778;
+    color:white;
+    font-weight:bold;
 }
