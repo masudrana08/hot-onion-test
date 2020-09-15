@@ -1,0 +1,13 @@
+.banner-background{
+    background:url('../../images/bannerbackground.png') center center fixed;
+    background-size: cover;
+    height:300px;
+    position:relative;
+    
+}
+.banner{
+    text-align:center;
+    position:relative;
+    padding-top:80px;
+    
+}
