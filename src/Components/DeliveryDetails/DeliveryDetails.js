@@ -14,6 +14,7 @@ const DeliveryDetails = () => {
   };
   return (
     <form className="form-container" onSubmit={formHandler}>
+      <h2 style={{color:"#4e4e4e", borderBottom:"1px solid lightgray", paddingBottom:"10px"}}>Edit Delivery Details</h2>
       <FormGroup >
         <input
           name="receiverName"

@@ -2,7 +2,7 @@
     padding:10px;
     margin-bottom:10px;
     border:1px solid lightgray;
-    border-radius:5px
+    border-radius:5px;
 }
 .form-container input:focus,.form-container textarea:focus{
     outline:1px solid #fa0778;

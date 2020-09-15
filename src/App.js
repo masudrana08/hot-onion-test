@@ -10,6 +10,7 @@ import "firebase/auth"
 import firebaseConfig from './firebase.config'
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
 import ProceedOrder from './Components/ProceedOrder/ProceedOrder';
+import OrderPlaced from './Components/OrderPlaced/OrderPlaced';
 firebase.initializeApp(firebaseConfig);
 export const MyContext=createContext()
 function App() {
@@ -37,6 +38,11 @@ const [cartLength,setCartLength]=useState(JSON.parse(localStorage.getItem("liste
         <PrivateRoute path="/proceed-order">
           <ProceedOrder></ProceedOrder>
         </PrivateRoute>
+
+        <PrivateRoute path="/order-placed">
+          <OrderPlaced></OrderPlaced>
+        </PrivateRoute>
+        
       </Switch>
     </Router>
    </MyContext.Provider>
