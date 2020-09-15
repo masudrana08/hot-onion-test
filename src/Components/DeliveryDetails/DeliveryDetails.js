@@ -14,7 +14,7 @@ const DeliveryDetails = () => {
   };
   return (
     <form className="form-container" onSubmit={formHandler}>
-      <FormGroup style={{ width: "30%" }}>
+      <FormGroup >
         <input
           name="receiverName"
           onBlur={(event) =>

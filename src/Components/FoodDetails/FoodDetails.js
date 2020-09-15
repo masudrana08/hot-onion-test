@@ -1,8 +1,9 @@
 import { Button, Grid } from '@material-ui/core';
 import React, {  useContext, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { MyContext } from '../../App';
 import foodData from '../../foodData'
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 const FoodDetails = () => {
     const [cartLength,setCartLength]=useContext(MyContext)
@@ -49,12 +50,17 @@ const FoodDetails = () => {
                 </div>
                 <Button onClick={addItem} variant="contained" color="secondary" style={{borderRadius:"30px"}}>Add</Button>
                 </div>
-                <img style={{width:"150px"}} src={commonFood[a].img} alt=""/>
+                <Link to={`/food/${commonFood[a].id}`}>
+                    <img style={{width:"150px"}} src={commonFood[a].img} alt=""/>
+                </Link>
+                <Link to={`/food/${commonFood[b].id}`}>
                 <img style={{width:"150px"}} src={commonFood[b].img} alt=""/>
-                <button onClick={handleSuggestFood}>change</button>
+                </Link>
+                <ArrowForwardIosIcon style={{cursor:"pointer"}} color="secondary" variant="containet" fontSize="large" onClick={handleSuggestFood} />
+                
             </Grid>
             <Grid item xs={12} md={6}>
-                <img style={{width:"500px"}} src={img} alt=""/>
+                <img  style={{width:"500px"}} src={img} alt=""/>
             </Grid>
         </Grid>
 
